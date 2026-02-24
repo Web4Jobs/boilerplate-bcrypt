@@ -79,7 +79,7 @@ module.exports = function (app) {
     res.json({headers: hObj});
   });
 
-  app.get("/user-email", function (req, res) {
+  app.get("/_api/user-email", function (req, res) {
     var email = "";
     try {
       email = execSync("git config --get user.email", { encoding: "utf8" }).trim();
