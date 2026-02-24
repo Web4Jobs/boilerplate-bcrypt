@@ -37,6 +37,7 @@
 
 const fs = require('fs');
 const cors = require('cors');
+var execSync = require("child_process").execSync;
 
 const allowedOriginsMatcher = /^https?:\/\/([\w-]+\.)*freecodecamp\.org/;
 
@@ -76,6 +77,16 @@ module.exports = function (app) {
     hs.forEach(h => {hObj[h] = res._headers[h]});
     delete res._headers['strict-transport-security'];
     res.json({headers: hObj});
+  });
+
+  app.get("/user-email", function (req, res) {
+    var email = "";
+    try {
+      email = execSync("git config --get user.email", { encoding: "utf8" }).trim();
+    } catch (e) {
+      email = "";
+    }
+    res.json({ email: email });
   });
   
 };
